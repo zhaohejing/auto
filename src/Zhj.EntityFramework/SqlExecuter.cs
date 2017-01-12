@@ -291,3 +291,4 @@ on a.CustomerId =b.Id where a.IsDeleted=0 and b.Isdeleted=0 and a.State in (2)  
         }
     }
 }
+
