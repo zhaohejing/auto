@@ -1,0 +1,148 @@
+<style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .clearfix {
+        clear: both;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .print_container {
+        padding: 20px;
+        width: 240px;
+    }
+
+    .section1 {
+    }
+
+    .section2 label {
+        display: block;
+    }
+
+    .section3 label {
+        display: block;
+    }
+
+    .section4 {
+    }
+
+        .section4 .total label {
+            display: block;
+        }
+
+        .section4 .other_fee {
+            border-bottom: 1px solid #DADADA;
+        }
+
+    .section5 label {
+        display: block;
+    }
+</style>
+
+<div>
+    <form name="exampleForm" role="form" novalidate class="form-validation">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                充值流水打印
+            </h4>
+        </div>
+
+        <div id="print" class="modal-body">
+            <div class="print_container">
+
+                <div class="section1">
+                    <h3>会员卡充值流水</h3>
+                </div>
+                <span>**************************</span>
+
+
+                <div class="section4">
+                    <div style="border-bottom: 1px solid #DADADA;">
+                        <table style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td>充值时间:{{vm.order.time}}</td>
+                                </tr>
+                                <tr>
+                                    <td>充值金额:{{vm.order.needto | rmb}}</td>
+                                </tr>
+                                <tr>
+                                    <td>充值方式:现金</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <span>**************************</span>
+
+                    <div style="border-bottom: 1px solid #DADADA;">
+                        <table style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td>操作人员:{{vm.order.user.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>会员卡号:{{vm.order.customer.outCard}}</td>
+                                </tr>
+                                <tr>
+                                    <td>会员名称:{{vm.order.customer.customerName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>余额:{{vm.order.customer.balance+vm.order.needto}}</td>
+                                </tr>
+                             
+                            </tbody>
+                        </table>
+                    </div>
+               
+                </div>
+        
+                <span>**************************</span>
+                <div class="section1">
+                    <h3>签字：</h3>
+                </div>
+                <span>**************************</span>
+                <div class="section1">
+                    <h3>备注：</h3>
+                </div>
+                <div>
+                    <h3>此票是交款及核对余额的凭证,签字有效</h3>
+                </div>
+            </div>
+        </div>
+
+
+
+    </form>
+    <div class="modal-footer">
+        <button ng-disabled="vm.saving" type="button" class="btn btn-default" ng-click="vm.cancel()">取消</button>
+        <button type="submit" button-busy="vm.saving" busy-text="保存中"
+                class="btn btn-primary blue" ng-click="vm.save()"
+                ng-disabled="exampleForm.$invalid">
+            <i class="fa fa-save"></i> <span>打印</span>
+        </button>
+    </div>
+
+</div>
+
+

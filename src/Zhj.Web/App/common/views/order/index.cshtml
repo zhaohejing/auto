@@ -1,0 +1,192 @@
+<div ng-controller="common.views.order.index as vm">
+
+    <div class="portlet light">
+        <div class="portlet light portlet-fit bordered">
+
+            <div class="portlet-body">
+                <div class="mt-element-step">
+                    <div class="row step-thin">
+                        <div class="col-lg-4 bg-grey mt-step-col {{vm.step==1?'active':''}}">
+                            <div class="mt-step-number first bg-white font-grey">1</div>
+                            <div class="mt-step-title uppercase font-grey-cascade">会员信息确认</div>
+                        </div>
+                        <div class="col-lg-4 bg-grey mt-step-col {{vm.step==2?'active':''}}">
+                            <div class="mt-step-number first bg-white font-grey">2</div>
+                            <div class="mt-step-title uppercase font-grey-cascade">选餐</div>
+
+                        </div>
+                        <div class="col-lg-4 bg-grey mt-step-col {{vm.step==3?'active':''}}">
+                            <div class="mt-step-number first bg-white font-grey">3</div>
+                            <div class="mt-step-title uppercase font-grey-cascade">付款</div>
+
+                        </div>
+                    </div>
+
+                    <div ng-show="vm.step==1" class="portlet-body">
+                   
+                        <div class="portlet light">
+                            <div class="portlet-title">会员信息</div>
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">会员卡号</label>
+                                            <div class="col-md-8">
+                                                <tags-input display-property="outCard"
+                                                            min-tags="1" max-tags="1"
+                                                            add-from-autocomplete-only="true"
+                                                            on-tag-added="cardAdded($tag)"
+                                                            on-tag-removed="cardRemoved($tag)"
+                                                            ng-model="vm.card" placeholder="请输入会员卡号">
+                                                    <auto-complete min-length="0"
+                                                                   debounce-delay="0"
+                                                                   max-results-to-show="20"
+                                                                   template="my-card-template"
+                                                                   source="loadcard($query)"></auto-complete>
+                                                </tags-input>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">请输入会员名</label>
+                                            <div class="col-md-8">
+                                                <tags-input display-property="customerName"
+                                                            min-tags="1" max-tags="1"
+                                                            add-from-autocomplete-only="true"
+                                                            on-tag-added="cardAdded($tag)"
+                                                            on-tag-removed="cardRemoved($tag)"
+                                                            ng-model="vm.card" placeholder="请输入会员名">
+                                                    <auto-complete min-length="0"
+                                                                   debounce-delay="0"
+                                                                   max-results-to-show="10"
+                                                                   template="my-custom-template"
+                                                                   source="loadcustomer($query)"></auto-complete>
+                                                </tags-input>
+                                            </div>
+                                        </div>
+                                        <script type="text/ng-template" id="my-custom-template">
+                                            <div class="row">
+                                                <span>==>   {{data.outCard}} | {{data.customerName}}   <==</span>
+                                            </div>
+                                        </script>
+                                        <script type="text/ng-template" id="my-card-template">
+                                            <div class="row">
+                                                <span>==>   {{data.outCard}} | {{data.customerName}}   <==</span>
+                                            </div>
+                                        </script>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">电话</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly ng-model="vm.order.phone"
+                                                       class="form-control small" placeholder="电话">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">余额</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly ng-model="vm.order.balance"
+                                                       class="form-control small" placeholder="余额">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">点位</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly ng-model="vm.order.pointName"
+                                                       class="form-control small" placeholder="点位">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="footer">
+                                <button class="btn default" ng-disabled="!vm.order.card||!vm.order.pointName" ng-click="vm.next()">下一步</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div ng-show="vm.step==2" class="portlet-body">
+                        <div class="portlet-body">
+                            <div calendar datemodel="vm.datemodel" mlength="vm.datemodel.length"
+                                 events="vm.clickdate(this)" class="calendar" id="calendar"></div>
+                        </div>
+                        <div class="footer">
+                            <button class="btn default" ng-click="vm.prev()">上一步</button>
+
+                            <button class="btn default" ng-disabled="vm.order.dish.length<=0" ng-click="vm.getOrder()">下一步</button>
+                        </div>
+
+                    </div>
+
+
+
+                    <div ng-show="vm.step==3" class="portlet-body">
+                        <div class="portlet-title">订餐信息</div>
+                        <div class="portlet-body">
+                            <div class="row">
+                                <table class="table">
+                                    <thead>
+                                        <tr><th>取餐日期</th><th>餐品名称</th><th>数量</th><th>单价</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="vm.nopaylist.length>0" ng-repeat="r in vm.nopaylist">
+                                            <td>{{r.orderTime | date : 'yyyy-MM-dd'}}</td>
+                                            <td>{{r.dish}}</td>
+                                            <td>{{r.dishNumber}}</td>
+                                            <td>{{r.dishCost | rmb }}</td>
+                                        </tr>
+                                        <tr ng-if="vm.nopaylist.length<=0">
+                                            <td colspan="4">暂无记录</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr><td colspan="4">订单合计:{{vm.totalprice  | rmb}}</td></tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="fl form-name-fl">付款方式</label>
+                                    <div class="md-radio-inline fl form-value-fr label-height34">
+                                        <div class="md-radio">
+                                            <input type="radio" id="info" ng-model="vm.payState"
+                                                   value="1" required
+                                                   name="paytype" class="md-radiobtn">
+                                            <label for="info" class="info-lable-bottom">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> 现金
+                                            </label>
+                                        </div>
+                                        <div class="md-radio">
+                                            <input type="radio" id="account" ng-model="vm.payState" required
+                                                   value="2" name="paytype" class="md-radiobtn">
+                                            <label for="account">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> 会员卡
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="vm.payState==2" class="row">
+                                <p>卡号:{{vm.order.card}}</p>
+                                <p>姓名:{{vm.order.name}}</p>
+                                <p>当前卡余额:{{vm.order.balance}}</p>
+                            </div>
+
+                        </div>
+                        <div class="footer">
+                            <button class="btn default" ng-click="vm.prev()">上一步</button>
+                            <button class="btn default" ng-disabled="vm.paying" ng-click="vm.payfor()">点击付款</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

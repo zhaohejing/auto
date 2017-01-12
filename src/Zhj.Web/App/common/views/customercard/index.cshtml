@@ -1,0 +1,167 @@
+<div ng-controller="common.views.customercard.index as vm">
+    <div class="row margin-bottom-5">
+        <div class="col-xs-6">
+            <div class="page-head">
+                <div class="page-title">
+                    <h1>
+                        <span>会员卡信息</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="portlet light">
+        <div class="portlet-body">
+            <uib-tabset class="tab-container tabbable-line" active="vm.type">
+                <uib-tab index="1" heading="会员卡列表" select="vm.init()">
+                    <div class="portlet light">
+                        <div class="portlet-title">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">内部卡号</label>
+                                        <div class="col-md-8">
+                                            <input type="text" ng-model="vm.filter.innum" class="form-control small" placeholder="内部卡号">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">外部卡号</label>
+                                        <div class="col-md-8">
+                                            <input type="text" ng-model="vm.filter.outnum" class="form-control small" placeholder="外部卡号">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="form-actions">
+                                        <button type="button" ng-click="vm.init()" class="btn default small">查询</button>
+                                        @*<button type="button" class="btn default small">导入</button>*@
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                </div>
+                            </div>
+
+                        </div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>内部卡号</th>
+                                <th>外部卡号</th>
+                                <th>金额</th>
+                                <th>积分</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr ng-repeat="x in vm.table.data">
+                                <td ng-bind="x.inCard"></td>
+                                <td ng-bind="x.outCard"></td>
+                                <td ><span>{{x.balance | rmb }}</span></td>
+                                <td ng-bind="x.integral"></td>
+                                <td >
+                                    <span ng-if="x.state==1">可用</span>
+                                    <span ng-if="x.state==0">不可用</span>
+                                </td>
+                                <td>
+                                    <a href="#" ng-click="vm.edit(x);">修改</a>
+                                    <a href="#" ng-click="vm.deletecard(x);">删除</a>
+                                </td>
+                            </tr>
+                        </table>
+                        <nav>
+                            <ul class="pagination">
+                                <li><a ng-click="vm.table.first()"><span>首页</span></a></li>
+                                <li>
+                                    <a ng-click="vm.table.prev()">
+                                        <span>&lt;</span>
+                                    </a>
+                                </li>
+                                <li  ng-repeat="page in vm.table.pageList track by $index" ng-class="{active: vm.table.isActivePage(page)}">
+                                    <a ng-click="vm.table.selectPage(page)">{{ page }}</a>
+                                </li>
+                                <li>
+                                    <a ng-click="vm.table.next()">
+                                        <span>&gt;</span>
+                                    </a>
+                                </li>
+                                <li><a ng-click="vm.table.last()"><span>尾页</span></a></li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </uib-tab>
+                <uib-tab index="2" heading="会员卡管理">
+
+                    <div>
+                        <form name="cardForm" role="form" novalidate class="form-validation">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">会员内部卡号:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" required maxlength="25"
+                                                       name="inCard"   ng-class="{'warn':cardForm.inCard.$invalid}"
+                                                        ng-model="vm.card.inCard" class="form-control small" placeholder="内部卡号">
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">会员外部卡号:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" required maxlength="25" ng-model="vm.card.outCard"
+                                                       class="form-control small" placeholder="会员外部卡号">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">余额:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" required maxlength="25" ng-model="vm.card.balance"
+                                                       class="form-control small" placeholder="余额">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">积分:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" required maxlength="25" ng-model="vm.card.integral"
+                                                       class="form-control small" placeholder="积分">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">状态:</label>
+                                            <div class="col-md-8">
+                                                <select required class="form-control"
+                                                         ng-model="vm.card.state" 
+                                                        ng-options="x.value as x.text for x in vm.state"></select>
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4 text-right">
+                                        <button ng-disabled="vm.saving" type="button" class="btn btn-default" ng-click="vm.cancel()">返回</button>
+                                        <button type="submit" button-busy="vm.saving" busy-text="保存中..." class="btn btn-primary blue"
+                                                ng-click="vm.save()"
+                                                ng-disabled="cardForm.$invalid">
+                                            <i class="fa fa-save"></i> <span>保存</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+
+
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
+
+
+</div>

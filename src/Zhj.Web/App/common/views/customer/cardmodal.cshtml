@@ -1,0 +1,80 @@
+<div>
+    <form name="cardform" role="form" novalidate class="form-validation">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                选择卡号
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xs-10">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">外部卡号</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control small"
+                                       ng-model="vm.filter" placeholder="外部卡号">
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-xs-2">
+                    <div class="form-actions">
+                        <button type="button" class="btn default small" ng-click="vm.init()">查询</button>
+                     
+                    </div>
+                </div>
+             
+                </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th>内部卡号</th>
+                    <th>外部卡号</th>
+                    <th>金额</th>
+                    <th>积分</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="x in vm.table.data">
+                    <td ng-bind="x.inCard"></td>
+                    <td ng-bind="x.outCard"></td>
+                    <td><span>{{x.balance | rmb }}</span></td>
+                    <td ng-bind="x.integral"></td>
+                    <td>
+                        <span ng-if="x.state==1">可用</span>
+                        <span ng-if="x.state==0">不可用</span>
+                    </td>
+                    <td>
+                       <input name="select"  type="radio"  ng-click="vm.select(x)"/>
+                    </td>
+                </tr>
+            </table>
+            <nav>
+                <ul class="pagination">
+                    <li><a ng-click="vm.table.first()"><span>首页</span></a></li>
+                    <li>
+                        <a ng-click="vm.table.prev()">
+                            <span>&lt;</span>
+                        </a>
+                    </li>
+                    <li ng-repeat="page in vm.table.pageList track by $index"
+                        ng-class="{active: vm.table.isActivePage(page)}">
+                        <a ng-click="vm.table.selectPage(page)">{{ page }}</a>
+                    </li>
+                    <li>
+                        <a ng-click="vm.table.next()">
+                            <span>&gt;</span>
+                        </a>
+                    </li>
+                    <li><a ng-click="vm.table.last()"><span>尾页</span></a></li>
+
+                </ul>
+            </nav>
+        </div>
+        <div class="modal-footer">
+            <button ng-disabled="vm.saving" type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+            <button type="submit" button-busy="vm.saving" busy-text="保存中..." class="btn btn-primary blue"
+                     ng-click="vm.save()" ng-disabled="cardform.$invalid"><i class="fa fa-save"></i>
+             <span>保存</span></button>
+        </div>
+    </form>
+</div>

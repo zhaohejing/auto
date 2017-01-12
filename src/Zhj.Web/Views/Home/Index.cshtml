@@ -1,0 +1,63 @@
+﻿@using MyCompanyName.AbpZeroTemplate.EntityModel
+@{
+    Layout = null;
+}
+
+
+<link href="~/libs/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="~/libs/jquery-uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+<link href="/metronic/assets/global/css/components.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/login-5.min.css" rel="stylesheet" type="text/css" />
+
+<div id="LoginArea" class="user-login-5">
+    <div class="row bs-reset">
+        <div class="col-md-6 bs-reset">
+            <div class="login-bg" style="background-image:url(../Content/flags/background.jpg)">
+                <img class="login-logo" src="../Content/flags/logo.png" />
+            </div>
+        </div>
+        <div class="col-md-6 login-container bs-reset">
+            <div class="login-content">
+                <h1>自动售餐服务平台</h1>
+             
+            
+                        <form action="@Url.Action("Login","Account")?returnUrl=/phonebook" class="login-form" method="post">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <input class="form-control form-control-solid placeholder-no-fix form-group"
+                                           type="text"  autocomplete="off" placeholder="用户名" name="usernameOrEmailAddress" required  />
+                                </div>
+                                <div class="col-xs-6">
+                                    <input class="form-control form-control-solid placeholder-no-fix form-group"
+                                           type="password"  autocomplete="off" placeholder="密码" name="password" required  />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-8 text-right">
+
+                                    <button class="btn blue" type="submit">登录</button>
+                                </div>
+                            </div>
+                            <input id="ReturnUrlHash" type="hidden" name="returnUrlHash" />
+                        </form>
+
+
+
+
+
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

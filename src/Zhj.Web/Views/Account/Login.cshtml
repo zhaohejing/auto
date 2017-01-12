@@ -1,0 +1,52 @@
+﻿@using System.Globalization
+@using Abp.Extensions
+@using Abp.Web.Mvc.Extensions
+@using Microsoft.Owin.Security
+@using MyCompanyName.AbpZeroTemplate.MultiTenancy
+@model MyCompanyName.AbpZeroTemplate.Web.Models.Account.LoginFormViewModel
+
+@section Scripts
+{
+    @Html.IncludeScript("~/Views/Account/Login.js")
+}
+
+<h3 class="form-title">自动售餐服务平台</h3>
+
+
+<div id="errorPwd" class="alert alert-danger display-hide">
+    <button class="close" data-close="alert"></button>
+    <span>
+        <i class="fa fa-warning"></i> 密码错误,请重试
+    </span>
+</div>
+
+
+
+<div id="invilidate" class="alert alert-danger display-hide">
+    <button class="close" data-close="alert"></button>
+    <span>
+        <i class="fa fa-warning"></i> 请完善信息
+    </span>
+</div>
+
+<form class="login-form" action="@Url.Action("Login")?returnUrl=@ViewBag.ReturnUrl" method="post">
+    <input type="hidden" name="returnUrlHash" />
+            <input type="hidden" name="tenancyName" value="@Model.TenancyName" />
+    <div class="form-group">
+        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+        <label class="control-label visible-ie8 visible-ie9">用户名</label>
+        <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off"
+                placeholder="用户名" name="UserNameOrEmailAddress" value="@(Model.UserNameOrEmailAddress ?? "")" required />
+    </div>
+    <div class="form-group">
+        <label class="control-label visible-ie8 visible-ie9">密码</label>
+        <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off"
+                placeholder="密码" name="password" />
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success uppercase">登录</button>
+        <label class="rememberme check">
+            <input type="checkbox" name="rememberMe" value="true" />记住我
+        </label>
+    </div>
+</form>

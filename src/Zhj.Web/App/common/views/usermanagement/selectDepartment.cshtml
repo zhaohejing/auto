@@ -1,0 +1,36 @@
+﻿<div>
+    <form name="exampleForm" role="form" novalidate class="form-validation">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                选择机构
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" ng-model="vm.orgname"  ng-keydown="vm.searchorg()"
+                           class="form-control small" placeholder="按机构名称搜索">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default"  ng-click="vm.search()">搜索</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="portlet-body">
+
+                <div id="OrganizationUnitEditTree"></div>
+                <div ng-if="!vm.organizationTree.unitCount" class="text-muted">
+                    暂无组织机构
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer select-paddBott">
+            <button ng-disabled="vm.saving" type="button" class="btn btn-default" ng-click="vm.close()">关闭</button>
+            <button type="submit" button-busy="vm.saving" busy-text="确定"
+                    class="btn btn-primary blue" ng-click="vm.saveorg()"
+                    ng-disabled="exampleForm.$invalid">
+                <span>确定</span>
+            </button>
+        </div>
+    </form>
+</div>

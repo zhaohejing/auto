@@ -1,0 +1,192 @@
+<div ng-controller="common.views.usermanagement.index as vm">
+
+    <div class="portlet light">
+        <div class="portlet-body">
+            <uib-tabset class="tab-container tabbable-line" active="vm.type">
+                <uib-tab index="1" heading="用户列表">
+
+                    <div class="portlet-title big-title">
+                        <div class="actions org-table-toolbar">
+                            <div>
+                                <input maxlength="100"
+                                       type="search" class="form-control input-sm input-small input-inline"
+                                       placeholder="按姓名搜索" ng-model="vm.filter"
+                                       enter-Key="vm.getcoursebox()">
+                                <button class="sbold fa fa-search search-topAndRight-global ng-scope video-search"
+                                        ng-click="vm.getusers()"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body scrollList">
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>登录名</th>
+                                <th>姓名</th>
+                                <th>手机</th>
+                                <th>用户类型</th>
+                                <th>角色</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr ng-repeat="x in vm.table.data">
+                                <td ng-bind="x.userName"></td>
+                                <td ng-bind="x.name"></td>
+                                <td ng-bind="x.phone"></td>
+                                <td>
+                                    <span ng-if="x.type==1">系统管理</span>
+                                    <span ng-if="x.type==2">部门经理</span>
+                                    <span ng-if="x.type==3">普通用户</span>
+                                    <span ng-if="x.type==0">未设置</span>
+                                </td>
+                                <td ng-bind="x.roleDisplayName"></td>
+                                <td>
+                                    <a href="#" ng-if="vm.permissions.edit" ng-click="vm.edit(x);">修改</a>
+                                    <a href="#" ng-if="vm.permissions.delete" ng-click="vm.deletethis(x);">删除</a>
+                                </td>
+                            </tr>
+                        </table>
+                        <nav>
+                            <ul class="pagination">
+                                <li>
+                                    <a ng-click="vm.table.prev()">
+                                        <span>上一页</span>
+                                    </a>
+                                </li>
+                                <li ng-repeat="page in vm.table.pageList track by $index" ng-class="{active: vm.table.isActivePage(page)}">
+                                    <a ng-click="vm.table.selectPage(page)">{{ page }}</a>
+                                </li>
+                                <li>
+                                    <a ng-click="vm.table.next()">
+                                        <span>下一页</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </uib-tab>
+                <uib-tab index="2" heading="用户管理" ng-click="vm.adduser()">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <form name="userForm" role="form" novalidate class="form-validation">
+                                <div>
+                                    <div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">归属机构:</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="org" required maxlength="25" ng-model="vm.user.departmentName" class="form-control small" placeholder="归属机构">
+                                                </div>
+                                                <div class="col-md-2"><button ng-click="vm.showorg()" class="btn btn-default">查询</button></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">工号:</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" required maxlength="25" ng-model="vm.user.workNo"
+                                                           class="form-control small" placeholder="请输入工号">
+                                                </div>
+                                            </div>
+                                            <div class="form-group margin-top-10">
+                                                <label class="col-md-4 control-label">登录名:</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" ng-pattern="/^[a-zA-Z0-9]{3,10}$/" required maxlength="25" ng-model="vm.user.userName"
+                                                           class="form-control small" placeholder="请输入登录名">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">密码:</label>
+                                                <div class="col-md-8">
+                                                    <input type="password" ng-pattern="/^[a-zA-Z0-9]{3,10}$/" maxlength="20" ng-minlength="6" ng-model="vm.user.password"
+                                                           class="form-control small" placeholder="******">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-show="vm.user.password">
+                                                <label class="col-md-4 control-label">确认密码:</label>
+                                                <div class="col-md-8">
+                                                    <input type="password" placeholder="******"
+                                                           ng-model="vm.user.passwordRepeat"
+                                                           ui-validate="'$value==vm.user.password'"
+                                                           ui-validate-watch="vm.user.password" ng-minlength="6"
+                                                           class="form-control small">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">真实姓名:</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" required maxlength="25" ng-model="vm.user.name"
+                                                           class="form-control small" placeholder="请输入真实姓名">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">邮箱:</label>
+                                                <div class="col-md-8">
+                                                    <input type="email" required maxlength="25" ng-model="vm.user.emailAddress"
+                                                           class="form-control small" placeholder="请输入邮箱地址">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">手机:</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" required ng-pattern="/^0?1[3|4|5|8][0-9]\d{8}$/" maxlength="11" ng-model="vm.user.phone"
+                                                           class="form-control small" placeholder="请输入手机号">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">备注:</label>
+                                                <div class="col-md-8">
+
+                                                    <textarea ng-model="vm.user.emarks" maxlength="200" rows="5" type="text"
+                                                              name="description" class="form-control position-popup-textarea txt-width"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">用户状态:</label>
+                                                <div class="col-md-8">
+
+                                                    <select name="categorys" class="form-control fl modalinfo-tit-right modalinfo-tit-right2" required
+                                                            ui-validate="'$value>0'"
+                                                            ng-options="m.type as m.typeName for m in vm.userstype"
+                                                            ng-model="vm.user.type"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">用户角色:</label>
+                                                <div class="col-md-8">
+                                                    <select required ng-model="vm.user.roleName" class="form-control">
+                                                        <option value="Admin">系统管理员</option>
+                                                        <option value="User">操作员</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                       
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-group">                                          
+                                            <div class="col-md-8" >
+                                                <button ng-if="vm.permissions.create" type="submit" button-busy="vm.saving" busy-text="保存中..." class="btn btn-primary blue"
+                                                        ng-click="vm.save()"
+                                                        ng-disabled="userForm.$invalid">
+                                                    <i class="fa fa-save"></i> <span>保存</span>
+                                                </button>
+                                                <button ng-disabled="vm.saving" type="button" class="btn btn-default" ng-click="vm.cancel()">返回</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </form>
+
+                        </div>
+
+
+                    </div>
+
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+@using MyCompanyName.AbpZeroTemplate.Localization
+<div ng-controller="common.views.roles.index as vm">
+    <div class="row margin-bottom-5">
+        <div class="col-xs-6">
+            <div class="page-head">
+                <div class="page-title">
+                    <h1>
+                        <span>角色管理</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 text-right">
+            <button class="btn btn-primary blue" ng-click="vm.createRole()">
+                <i class="fa fa-plus"></i>添加新角色
+            </button>
+        </div>
+    </div>
+    <div class="portlet light">
+        <div class="portlet-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>角色名</th>
+                    <th>显示名</th>
+                    <th>状态</th>
+
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="x in vm.table.data">
+                    <td ng-bind="x.name"></td>
+                    <td ng-bind="x.displayName"></td>
+                    <td>
+                        <span ng-if="x.isStatic">静态角色</span>
+                    <span ng-if="x.isDefault">默认角色</span>
+                        
+                    </td>
+                    <td>
+                        <a href="#" ng-click="vm.editRole(x);">编辑</a>
+                        <a href="#" ng-click="vm.deleteRole(x);">删除</a>
+                        
+                    </td>
+                </tr>
+            </table>
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a ng-click="vm.table.prev()">
+                            <span>上一页</span>
+                        </a>
+                    </li>
+                    <li ng-repeat="page in vm.table.pageList track by $index" ng-class="{active: vm.table.isActivePage(page)}">
+                        <a ng-click="vm.table.selectPage(page)">{{ page }}</a>
+                    </li>
+                    <li>
+                        <a ng-click="vm.table.next()">
+                            <span>下一页</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

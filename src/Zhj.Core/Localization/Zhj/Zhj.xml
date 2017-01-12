@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="zh-CN">
+  <texts>
+
+
+
+
+    <text name="SuccessfullySaved" value="保存成功." />
+    <text name="SaveAndClose" value="保存 &amp; 关闭" />
+    <text name="SaveAndNext" value="保存 &amp; 文本" />
+    <text name="EmptyOnes" value="空值" />
+    <text name="Source" value="选择源" />
+
+
+
+
+
+    <text name="ThereIsNoAny" value="请选择对象操作!" />
+    <text name="TheCardHadBind" value="该卡已绑定,请重试!" />
+    <text name="ThereHadNoMuchMoney" value="卡内余额不足!" />
+    <text name="ThereHasMoney" value="卡内还有余额,无法操作!" />
+    <text name="TheCardBalanceIsNotMuch" value="卡内余额不足,请充值!" />
+    <text name="OnlyTakeTomorrowDish" value="只能取明天往后的餐品!" />
+
+
+
+    <text name="OnlyTakeCurrentDish" value="只能取当前往后的餐品!" />
+    <text name="OnlyBackTomorrowDish" value="只能退订明天往后的订单!" />
+    <text name="OnlyBackCurrentDish" value="只能退订当前往后的订单!" />
+    <text name="PhoneBook" value="电话订餐" />
+    <text name="CustomerInfo" value="客户信息" />
+    <text name="CustomerCardInfo" value="会员卡管理" />
+    <text name="TradingInfo" value="交易信息" />
+    <text name="CustomerManagement" value="客户管理" />
+    <text name="ReportManagement" value="报表管理" />
+
+    <text name="DayDue" value="日预定商品" />
+    <text name="MemberConsumptionRecord" value="用户消费记录表" />
+    <text name="PointOrder" value="每点位每天预订餐表" />
+    <text name="PrepaidRecords" value="销售量日报表" />
+    <text name="PointOrderRecords" value="会员充值提现表" />
+
+
+
+    <text name="OrganizationUser" value="机构用户" />
+    <text name="UserManagement" value="用户管理" />
+    <text name="Role" value="角色管理" />
+  </texts>
+</localizationDictionary>

@@ -1,0 +1,28 @@
+<div>
+    <form name="exampleForm" role="form" novalidate class="form-validation">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                {{vm.type==1?'充值':(vm.type==2?'提现':vm.type==3?'退卡':'')}}
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group"> 卡内余额:{{vm.customer.balance}}</div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">{{vm.type==1?'充值':(vm.type==2?'提现':vm.type==3?'退卡':'')}}</label>
+                <div class="col-md-8">
+                    <input type="number" class="form-control small" required  ng-model="vm.needto" ng-pattern="/^\d+(?:\.\d{1,2})?$/"
+                           placeholder="{{vm.type==1?'请输入金额,保留两位小数':(vm.type==2?'请输入金额,保留两位小数':vm.type==3?'当前余额':'')}}">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button ng-disabled="vm.saving" type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+            <button type="submit" button-busy="vm.saving" busy-text="执行中...."
+                    class="btn btn-primary blue" ng-click="vm.save()"
+                    ng-disabled="exampleForm.$invalid">
+                <i class="fa fa-save"></i> <span>保存</span>
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,152 @@
+<style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .clearfix {
+        clear: both;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .print_container {
+        padding: 20px;
+        width: 240px;
+    }
+
+    .section1 {
+    }
+
+    .section2 label {
+        display: block;
+    }
+
+    .section3 label {
+        display: block;
+    }
+
+    .section4 {
+    }
+
+        .section4 .total label {
+            display: block;
+        }
+
+        .section4 .other_fee {
+            border-bottom: 1px solid #DADADA;
+        }
+
+    .section5 label {
+        display: block;
+    }
+</style>
+
+<div>
+    <form name="exampleForm" role="form" novalidate class="form-validation">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                小票打印
+            </h4>
+        </div>
+
+        <div id="print" class="modal-body">
+            <div class="print_container">
+
+                <div class="section1">
+                    <h3>预订单</h3>
+                </div>
+                <span>**************************</span>
+                <div class="section3">
+                    <label>下单时间：{{vm.time}}</label>
+                </div>
+                <span>**************************</span>
+
+                <div class="section4">
+                    <div style="border-bottom: 1px solid #DADADA;">
+                      
+                        <table style="width: 100%;border:dashed">
+                            <thead>
+                                <tr></tr>
+                                <tr>
+                                    <td width="30%">取餐时间</td>
+                                    <td width="30%">菜名</td>
+                                    <td width="20%">数量</td>
+                                    <td width="20%">金额</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="a in vm.order.dishes">
+                                    <td>{{a.orderTime | date : 'yy/MM/dd'}}</td>
+                                    <td>{{a.dish}}</td>
+                                    <td>{{a.dishNumber}}</td>
+                                    <td>{{a.dishCost*a.dishNumber}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="total">
+                        <label >总计</label>
+                        <label >{{vm.order.totalprice}}</label>
+                        <div ></div>
+                    </div>
+                    <div style="text-align: right;">
+                        <label>支付方式:{{vm.order.payState==2?'会员卡':'现金'}}</label>
+                    </div>
+                    <span>**************************</span>
+                </div>
+                <div ng-if="vm.order.payState==2" class="section5">
+                    <label>卡号：{{vm.order.order.card}}</label>
+                    <label>姓名：{{vm.order.order.name}}</label>
+                    <span >
+                        <label >余额：{{vm.order.order.balance-vm.order.totalprice}}</label>
+                    </span>
+                    <label>积分：{{vm.order.order.integral}}</label>
+                </div>
+                <span>**************************</span>
+                <div class="section1">
+                    <h3>签字：</h3>
+                </div>
+                <span>**************************</span>
+                <div class="section1">
+                    <h3>备注：</h3>
+                </div>
+                <div >
+                    <h3>此票是交款及核对余额的凭证,签字有效</h3>
+                </div>
+            </div>
+        </div>
+
+
+      
+    </form>
+    <div class="modal-footer">
+        <button ng-disabled="vm.saving" type="button" class="btn btn-default" ng-click="vm.cancel()">取消</button>
+        <button type="submit" button-busy="vm.saving" busy-text="保存中"
+                class="btn btn-primary blue" ng-click="vm.save()"
+                ng-disabled="exampleForm.$invalid">
+            <i class="fa fa-save"></i> <span>打印</span>
+        </button>
+    </div>
+   
+</div>
+
+
