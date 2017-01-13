@@ -10,59 +10,59 @@
                             <div>
                                 <input maxlength="100"
                                        type="search" class="form-control input-sm input-small input-inline"
-                                       placeholder="按姓名搜索" ng-model="vm.filter"
+                                       placeholder="按姓名搜索" ng-model="vm.jTableInfo.filter"
                                        enter-Key="vm.getcoursebox()">
-                                <button class="sbold fa fa-search search-topAndRight-global ng-scope video-search"
-                                        ng-click="vm.getusers()"></button>
+                                <button class="btn btn-default"
+                                        ng-click="vm.getusers()">查询</button>
                             </div>
                         </div>
                     </div>
-                    <div class="portlet-body scrollList">
+                    <div class="portlet-body">
+                        <table class="table table-hover table-bordered" bs-table
+                                conf="vm.jTableInfo" >
+                            <thead>
+                                <tr>
+                                    <th>登录名</th>
+                                    <th>姓名</th>
+                                    <th>手机</th>
+                                    <th>用户类型</th>
+                                    <th>角色</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*// you can use ng-repeat in tbody as below in tr html tag*@
+                                <tr ng-repeat="x in vm.jTableInfo.data">
+                                    <td ng-bind="x.userName"></td>
+                                    <td ng-bind="x.name"></td>
+                                    <td ng-bind="x.phone"></td>
+                                    <td>
+                                        <span ng-if="x.type==1">系统管理</span>
+                                        <span ng-if="x.type==2">部门经理</span>
+                                        <span ng-if="x.type==3">普通用户</span>
+                                        <span ng-if="x.type==0">未设置</span>
+                                    </td>
+                                    <td ng-bind="x.roleDisplayName"></td>
+                                    <td class="action-column">
+                                        <a href="#"  ng-if="vm.permissions.edit" ng-click="vm.edit(x);">修改</a>
+                                        <a href="#" ng-if="vm.permissions.delete" ng-click="vm.deletethis(x);">删除</a>
+                                    </td>
 
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>登录名</th>
-                                <th>姓名</th>
-                                <th>手机</th>
-                                <th>用户类型</th>
-                                <th>角色</th>
-                                <th>操作</th>
-                            </tr>
-                            <tr ng-repeat="x in vm.table.data">
-                                <td ng-bind="x.userName"></td>
-                                <td ng-bind="x.name"></td>
-                                <td ng-bind="x.phone"></td>
-                                <td>
-                                    <span ng-if="x.type==1">系统管理</span>
-                                    <span ng-if="x.type==2">部门经理</span>
-                                    <span ng-if="x.type==3">普通用户</span>
-                                    <span ng-if="x.type==0">未设置</span>
-                                </td>
-                                <td ng-bind="x.roleDisplayName"></td>
-                                <td>
-                                    <a href="#" ng-if="vm.permissions.edit" ng-click="vm.edit(x);">修改</a>
-                                    <a href="#" ng-if="vm.permissions.delete" ng-click="vm.deletethis(x);">删除</a>
-                                </td>
-                            </tr>
+                                    @*<td>{{contact.FirstName}}</td>
+                                    <td>{{contact.LastName}}</td>
+                                    <td class="action-column">
+                                        <button type="button" class="btn btn-info btn-sm" ng-click="Edit(contact)">Edit</button>
+                                    </td>*@
+                                </tr>
+                            </tbody>
                         </table>
-                        <nav>
-                            <ul class="pagination">
-                                <li>
-                                    <a ng-click="vm.table.prev()">
-                                        <span>上一页</span>
-                                    </a>
-                                </li>
-                                <li ng-repeat="page in vm.table.pageList track by $index" ng-class="{active: vm.table.isActivePage(page)}">
-                                    <a ng-click="vm.table.selectPage(page)">{{ page }}</a>
-                                </li>
-                                <li>
-                                    <a ng-click="vm.table.next()">
-                                        <span>下一页</span>
-                                    </a>
-                                </li>
-                            </ul>
+                        <nav class="paging">
+                            <obj-pagination conf="vm.jTableInfo.pageConfig"></obj-pagination>
                         </nav>
+
                     </div>
+
+               
 
                 </uib-tab>
                 <uib-tab index="2" heading="用户管理" ng-click="vm.adduser()">
@@ -75,7 +75,9 @@
                                             <div class="form-group">
                                                 <label class="col-md-4 control-label">归属机构:</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" id="org" required maxlength="25" ng-model="vm.user.departmentName" class="form-control small" placeholder="归属机构">
+                                                    <input type="text" id="org" required maxlength="25"
+                                                            ng-model="vm.user.departmentName" 
+                                                           class="form-control small" placeholder="归属机构">
                                                 </div>
                                                 <div class="col-md-2"><button ng-click="vm.showorg()" class="btn btn-default">查询</button></div>
                                             </div>
@@ -160,12 +162,12 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                       
+
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="form-group">                                          
-                                            <div class="col-md-8" >
+                                        <div class="form-group">
+                                            <div class="col-md-8">
                                                 <button ng-if="vm.permissions.create" type="submit" button-busy="vm.saving" busy-text="保存中..." class="btn btn-primary blue"
                                                         ng-click="vm.save()"
                                                         ng-disabled="userForm.$invalid">

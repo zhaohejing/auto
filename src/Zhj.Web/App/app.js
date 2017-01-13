@@ -12,7 +12,8 @@ var appModule = angular.module("app", [
     'daterangepicker',
     'angularMoment',
     'frapontillo.bootstrap-switch',
-    'abp', 'ngTagsInput'
+    'abp', 'ngTagsInput',
+    'bsTable', 'objPagination'
 ]);
 
 /* LAZY LOAD CONFIG */
