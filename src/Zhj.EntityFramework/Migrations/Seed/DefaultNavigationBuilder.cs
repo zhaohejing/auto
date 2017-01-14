@@ -22,12 +22,15 @@ namespace MyCompanyName.AbpZeroTemplate.Migrations.Seed {
         /// 添加默认导航
         /// </summary>
         private void CreateDefaultNavigation() {
-            if (_context.BaseNavigation.Count() > 0) {
-                return;
-            }
+            //if (_context.BaseNavigation.Count() > 0) {
+            //    _context.BaseNavigation = new System.Data.Entity.IDbSet<BaseNavigation>;
+            //    _context.SaveChanges();
+            //}
             var list = GetNavigationList();
             foreach (var level in list) {
-
+                if (_context.BaseNavigation.Where(c => c.Name.Equals(level.Name)).Count() > 0) {
+                    continue;
+                }
                 var one = _context.BaseNavigation.Add(
                     new BaseNavigation(
                     level.Name, level.DisplayName, level.Url,
@@ -74,6 +77,7 @@ namespace MyCompanyName.AbpZeroTemplate.Migrations.Seed {
                 new LevelTwo("PointOrder","每点位每天预定餐表","pointorder","fa fa-gear",AppPermissions.Pages_ReportManagement_PointOrder),
                 new LevelTwo("PrepaidRecords","充值记录","prepaidrecords","fa fa-gear",AppPermissions.Pages_ReportManagement_PointOrder),
                 new LevelTwo("PointOrderRecords","订单汇总统计","pointorderrecords","fa fa-gear",AppPermissions.Pages_ReportManagement_PointOrder),
+                new LevelTwo("TheEndOfCheckList","月底对账清单","theendofchecklist","fa fa-gear",AppPermissions.Pages_ReportManagement_TheEndOfCheckList)
 
             };
             var dealevent = new LevelOne("ReportManagement", "报表管理", "", "fa fa-gavel", AppPermissions.Pages_ReportManagement, deal);
@@ -88,19 +92,7 @@ namespace MyCompanyName.AbpZeroTemplate.Migrations.Seed {
             var knowledges = new LevelOne("OrganizationUser", "机构用户", "organizationuser", "fa fa-mortar-board", AppPermissions.Pages_OrganizationUser, knowledgebase);
             list.Add(knowledges);
 
-            ////统计分析
-            //var statistical = new List<LevelTwo>() {
-            //    new LevelTwo("Statistical","按需报表","statistical","fa fa-qrcode",AppPermissions.Pages_Analysis_Statistical)
-            //};
-            //var analysis = new LevelOne("Analysis", "统计分析", "analysis", "fa fa-pie-chart", AppPermissions.Pages_Analysis, statistical);
-            //list.Add(analysis);
-            ////系统
-            //var rolechilds = new List<LevelTwo>() {
-            //    new LevelTwo("User","用户管理","user","fa fa-user",AppPermissions.Pages_Administration_Users),
-            //    new LevelTwo("Role","角色管理","role","fa fa-user-plus",AppPermissions.Pages_Administration_Roles)
-            //};
-            //var system = new LevelOne("System", "系统设置", "system", "fa fa-cogs", AppPermissions.Pages_Administration, rolechilds);
-            //list.Add(system);
+         
             return list;
 
         }

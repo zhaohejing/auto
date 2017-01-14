@@ -119,9 +119,9 @@
     <Compile Include="EntityFramework\MySqlHelper.cs" />
     <Compile Include="EntityFramework\ZhjDbContext.cs" />
     <Compile Include="EntityFramework\Repositories\AbpZeroTemplateRepositoryBase.cs" />
-    <Compile Include="Migrations\201612260347178_wwwww.cs" />
-    <Compile Include="Migrations\201612260347178_wwwww.Designer.cs">
-      <DependentUpon>201612260347178_wwwww.cs</DependentUpon>
+    <Compile Include="Migrations\201701140203018_www.cs" />
+    <Compile Include="Migrations\201701140203018_www.Designer.cs">
+      <DependentUpon>201701140203018_www.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="AbpZeroTemplateDataModule.cs" />
@@ -145,8 +145,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612260347178_wwwww.resx">
-      <DependentUpon>201612260347178_wwwww.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701140203018_www.resx">
+      <DependentUpon>201701140203018_www.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

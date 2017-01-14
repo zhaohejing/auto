@@ -28,6 +28,7 @@
         public const string Pages_ReportManagement_PointOrder = "Pages.ReportManagement.PointOrder";
         public const string Pages_ReportManagement_PrepaidRecords = "Pages.ReportManagement.PrepaidRecords";
         public const string Pages_ReportManagement_PointOrderRecords = "Pages.ReportManagement.PointOrderRecords";
+        public const string Pages_ReportManagement_TheEndOfCheckList = "Pages.ReportManagement.TheEndOfCheckList";
         
 
         public const string Pages_OrganizationUser = "Pages.OrganizationUser";

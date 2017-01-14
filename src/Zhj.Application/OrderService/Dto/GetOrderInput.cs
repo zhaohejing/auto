@@ -47,6 +47,9 @@ namespace MyCompanyName.AbpZeroTemplate.OrderService.Dto {
         }
     }
     public class GetprePaidInput : PagedAndSortedInputDto, IShouldNormalize {
+        public DateTime? SearchStartTime { get; set; }
+
+        public DateTime? SearchEndTime { get; set; }
         public string Name { get; set; }
         public string Card { get; set; }
         public void Normalize() {

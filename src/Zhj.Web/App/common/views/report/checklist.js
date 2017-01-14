@@ -1,5 +1,6 @@
-﻿(function () {
-    appModule.controller('common.views.report.duerecords', [
+﻿/// <reference path="checklist.js" />
+(function () {
+    appModule.controller('common.views.report.checklist', [
         '$scope', '$uibModal', 'abp.services.app.order',
         function ($scope, $uibModal, orderService) {
             var vm = this;
@@ -7,9 +8,6 @@
             $scope.$on('$viewContentLoaded', function () {
                 App.initAjax();
             });
-
-            vm.name = "";
-            vm.card = "";
             vm.date = {
                 leftopen: false,
                 rightopen: false,
@@ -36,6 +34,9 @@
                     // $scope.popup2.opened = !$scope.popup2.opened;
                 }
             }
+            vm.filter = "";
+            vm.userState = [{ id: 1, text: '普通用户' },
+              { id: 2, text: '公司员工' }, { id: 3, text: '社区员工' }];
             vm.table = {
                 data: [],
                 pageSize: 10,
@@ -94,11 +95,10 @@
                 var display = vm.table.pageSize;
 
                 vm.loading = true;
-                orderService.getprePaidList({
+                orderService.getCheckLists({
                     skipCount: (page - 1) * display,
                     maxResultCount: display,
-                    name: vm.name,
-                    card: vm.card,
+                    filter: vm.filter,
                     searchStartTime: vm.startTime,
                     searchEndTime: vm.endTime
                 }).success(function (result) {
@@ -110,8 +110,8 @@
                 });
             }
             vm.export = function () {
-                var parms = { name: vm.name, card: vm.card};
-                orderService.exportprePaidList(parms)
+                var parms = { filter: vm.filter, searchStartTime: vm.startTime, searchEndTime: vm.endTime };
+                orderService.exportCheckLists(parms)
                    .success(function (result) {
                        app.downloadTempFile(result);
                    });

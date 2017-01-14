@@ -41,7 +41,7 @@ namespace MyCompanyName.AbpZeroTemplate.CustomerService {
                 .WhereIf(!input.Name.IsNullOrWhiteSpace(), c => c.CustomerName.Contains(input.Name))
                .WhereIf(!input.Mobile.IsNullOrWhiteSpace(), c => c.CustomerPhone.Contains(input.Mobile))
                .WhereIf(!input.Card.IsNullOrWhiteSpace(), c => !c.OutCard.IsNullOrWhiteSpace() && c.OutCard.Contains(input.Card))
-               .WhereIf(!input.Point.IsNullOrWhiteSpace(),c=>c.PointName.Contains(input.Point))
+               .WhereIf(!input.Point.IsNullOrWhiteSpace(),c=>c.PointName.Equals(input.Point))
                ;
             var count = res.Count();
             var l = res.OrderByDescending(c => c.Id).Skip(input.SkipCount).Take(input.MaxResultCount)
@@ -71,7 +71,7 @@ namespace MyCompanyName.AbpZeroTemplate.CustomerService {
             if (list == null || list.Count() <= 0) {
                 return new PagedResultOutput<UserOrdersDto>(0, null);
             }
-            list = list.WhereIf(!input.DeviceName.IsNullOrWhiteSpace(), c => c.PointName.Contains(input.DeviceName));
+            list = list.WhereIf(!input.DeviceName.IsNullOrWhiteSpace(), c => c.PointName.Equals(input.DeviceName));
             var count = list.Count();
             var l = list.OrderByDescending(c => c.CreationTime).Skip(input.SkipCount).Take(input.MaxResultCount)
               .ToList();
@@ -87,7 +87,7 @@ namespace MyCompanyName.AbpZeroTemplate.CustomerService {
             var res = list.WhereIf(!input.Name.IsNullOrWhiteSpace(), c => c.CustomerName.Contains(input.Name))
                .WhereIf(!input.Mobile.IsNullOrWhiteSpace(), c => c.CustomerPhone.Contains(input.Mobile))
                .WhereIf(!input.Card.IsNullOrWhiteSpace(), c => !c.OutCard.IsNullOrWhiteSpace()&&c.OutCard.Contains(input.Card))
-               .WhereIf(!input.Point.IsNullOrWhiteSpace(), c => c.PointName.Contains(input.Point))
+               .WhereIf(!input.Point.IsNullOrWhiteSpace(), c => c.PointName.Equals(input.Point))
                ;
             var count = res.Count();
             var l = res.OrderByDescending(c => c.Id).Skip(input.SkipCount).Take(input.MaxResultCount)

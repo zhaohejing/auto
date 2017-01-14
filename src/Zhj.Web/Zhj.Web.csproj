@@ -343,6 +343,7 @@
     <Content Include="App\common\views\order\modal.js" />
     <Content Include="App\common\views\profile\changePassword.js" />
     <Content Include="App\common\views\report\duerecords.js" />
+    <Content Include="App\common\views\report\checklist.js" />
     <Content Include="App\common\views\report\prepaid.js" />
     <Content Include="App\common\views\report\pointOrder.js" />
     <Content Include="App\common\views\report\customOrder.js" />
@@ -1807,6 +1808,7 @@
     <Content Include="App\common\views\report\duerecords.cshtml" />
     <Content Include="App\common\views\order\index.cshtml" />
     <Content Include="App\common\views\customer\print.cshtml" />
+    <Content Include="App\common\views\report\checklist.cshtml" />
     <None Include="Properties\PublishProfiles\mysetting.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />

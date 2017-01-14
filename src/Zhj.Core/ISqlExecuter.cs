@@ -13,6 +13,7 @@ namespace MyCompanyName.AbpZeroTemplate {
         IEnumerable<T> GetCardList<T>() where T : class, new();
         IEnumerable<T> GetUsedCardList<T>() where T : class, new();
         int GetCustomerCard(string outCard);
+        IEnumerable<T> GetCheekList<T>(DateTime? startTime, DateTime? end, string filter) where T : class, new();
 
         string GetCardCustomer(int customerId);
        IEnumerable<T> GetCustomerList<T>() where T : class, new();

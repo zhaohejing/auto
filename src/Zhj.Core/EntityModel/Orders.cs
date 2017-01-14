@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,10 @@ namespace MyCompanyName.AbpZeroTemplate.EntityModel {
         public OrderState State { get; set; }
         public int DishId { get; set; }
         public int TakeOff { get; set; }
+        [MaxLength(100)]
 
         public string Dish { get; set; }
+
         public decimal DishCost { get; set; }
 
         public int DishNumber { get; set; }

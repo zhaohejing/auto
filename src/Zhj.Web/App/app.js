@@ -84,6 +84,16 @@ appModule.config([
                 menu: 'CustomerCardInfo'
             });
         }
+        //月对账订单
+        if (abp.auth.hasPermission('Pages.ReportManagement.TheEndOfCheckList')) {
+            $stateProvider.state('theendofchecklist', {
+                url: '/checklist',
+                templateUrl: '~/App/common/views/report/checklist.cshtml',
+                menu: 'TheEndOfCheckList'
+            });
+        }
+        
+
         //预定
         $stateProvider.state('order', {
             url: '/order',

@@ -39,8 +39,9 @@
     <text name="PointOrder" value="每点位每天预订餐表" />
     <text name="PrepaidRecords" value="销售量日报表" />
     <text name="PointOrderRecords" value="会员充值提现表" />
+    <text name="TheEndOfCheckList" value="月对账订单" />
 
-
+    
 
     <text name="OrganizationUser" value="机构用户" />
     <text name="UserManagement" value="用户管理" />

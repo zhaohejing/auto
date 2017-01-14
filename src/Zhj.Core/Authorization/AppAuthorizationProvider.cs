@@ -32,7 +32,7 @@ namespace MyCompanyName.AbpZeroTemplate.Authorization
             var ccc = rep.CreateChildPermission(AppPermissions.Pages_ReportManagement_PointOrder, L("每点位每天预定餐表"));
             var ddd = rep.CreateChildPermission(AppPermissions.Pages_ReportManagement_PrepaidRecords, L("充值记录"));
             var eee = rep.CreateChildPermission(AppPermissions.Pages_ReportManagement_PointOrderRecords, L("交易汇总统计"));
-
+            var fff = rep.CreateChildPermission(AppPermissions.Pages_ReportManagement_TheEndOfCheckList, L("月底对账清单"));
 
             //public const string Pages_OrganizationUser = "Pages.OrganizationUser";
             //public const string Pages_OrganizationUser_UserManagement = "Pages.OrganizationUser.UserManagement";

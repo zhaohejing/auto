@@ -55,9 +55,9 @@ where a.IsDeleted=0 and b.IsDeleted=0 and a.State=1;";
         }
         public IEnumerable<T> GetprePaidList<T>() where T : class, new() {
             var sql = $@"select a.RechargeNumber,c.CustomerName,b.OutCard,e.TopUp,e.WithDrawal,a.CreationTime,d.UserName
-from rechargerrecords a left join iccards b on a.CardId =b.Id left join
-customers c on b.Id=c.CardId left join abpusers d on a.CreatorUserId=d.Id
-left join (select RechargeNumber, max(case State when 1 then RechargeCost else 0 end ) TopUp,
+from rechargerrecords a inner join (select * from iccards where isdeleted=0) b on a.CardId =b.Id inner join
+(select * from customers where isdeleted=0) c on b.Id=c.CardId left join abpusers d on a.CreatorUserId=d.Id
+inner join (select RechargeNumber, max(case State when 1 then RechargeCost else 0 end ) TopUp,
 max(case State when 2 then RechargeCost else 0 end ) WithDrawal, max(creationTime) CreationTIme
   from rechargerrecords group by RechargeNumber) e on a.RechargeNumber =e.RechargeNumber;";
 
@@ -110,7 +110,7 @@ max(case State when 2 then RechargeCost else 0 end ) WithDrawal, max(creationTim
             }
             if (!string.IsNullOrWhiteSpace(deviceName)) {
                 // parm += $@" and c.InCard  like '%{deviceName}%' ";
-                parm += $@"and a.pointName like '%{deviceName}%'";
+                parm += $@"and a.pointName like '{deviceName}'";
             }
             var sql = $@"select a.Id,b.CustomerState, b.customerName,c.OutCard,a.State,a.Dish,a.DishNumber,
 a.OrderTime,a.CreationTime,a.OrderAmount,a.AmountPayable,
@@ -235,7 +235,7 @@ on b.CardId=c.Id inner join orderpaylists d on a.Id=d.OrderId left join abpusers
             return ConvertToModel<T>(dt);
         }
 
-
+     
         public static List<T> ConvertToModel<T>(DataTable dt) where T : class, new() {
             // 定义集合    
             List<T> ts = new List<T>( );
@@ -265,7 +265,27 @@ on b.CardId=c.Id inner join orderpaylists d on a.Id=d.OrderId left join abpusers
             return ts;
         }
 
+        public IEnumerable<T> GetCheekList<T>(DateTime? startTime, DateTime? end, string filter) where T : class, new() {
+            string parms = string.Empty;
+            if (startTime.HasValue) {
+                var t = Clock.Normalize((DateTime)startTime);
+                parms += $@" and a.OrderTime >='{t}' ";
+            }
+            if (end.HasValue) {
+                var t = Clock.Normalize((DateTime)end);
+                parms += $@" and a.OrderTime <='{t}' ";
+            }
 
+            if (!string.IsNullOrWhiteSpace(filter)) {
+                parms += $@" and a.PointName  like '{filter}' ";
+            }
+
+            var sql = $@"select a.PointId,max(a.PointName) PointName,b.CustomerState,sum(a.DishNumber) Count,sum(a.AmountPayable)  Payfor
+from orders a inner join customers b
+on a.CustomerId =b.Id where a.IsDeleted=0 and b.Isdeleted=0 and a.State in (2,3)  {parms} group by a.PointId,b.CustomerState ;";
+            var dt = MySqlHelper.ExecuteDataTable(CommandType.Text, sql);
+            return ConvertToModel<T>(dt);
+        }
 
 
         public IEnumerable<T> GetPointOrders<T>(DateTime? startTime, DateTime? end, string filter) where T : class, new() {
@@ -280,7 +300,7 @@ on b.CardId=c.Id inner join orderpaylists d on a.Id=d.OrderId left join abpusers
             }
 
             if (!string.IsNullOrWhiteSpace(filter)) {
-                parms += $@" and a.PointName  like '%{filter}%' ";
+                parms += $@" and a.PointName  like '{filter}' ";
             }
      
         var sql = $@"select a.PointId,max(a.PointName) PointName,b.CustomerState,sum(a.DishNumber) Count,sum(a.AmountPayable)  Payfor

@@ -31,7 +31,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @*// you can use ng-repeat in tbody as below in tr html tag*@
                                 <tr ng-repeat="x in vm.jTableInfo.data">
                                     <td ng-bind="x.userName"></td>
                                     <td ng-bind="x.name"></td>
@@ -48,22 +47,13 @@
                                         <a href="#" ng-if="vm.permissions.delete" ng-click="vm.deletethis(x);">删除</a>
                                     </td>
 
-                                    @*<td>{{contact.FirstName}}</td>
-                                    <td>{{contact.LastName}}</td>
-                                    <td class="action-column">
-                                        <button type="button" class="btn btn-info btn-sm" ng-click="Edit(contact)">Edit</button>
-                                    </td>*@
                                 </tr>
                             </tbody>
                         </table>
                         <nav class="paging">
                             <obj-pagination conf="vm.jTableInfo.pageConfig"></obj-pagination>
                         </nav>
-
                     </div>
-
-               
-
                 </uib-tab>
                 <uib-tab index="2" heading="用户管理" ng-click="vm.adduser()">
                     <div class="row">

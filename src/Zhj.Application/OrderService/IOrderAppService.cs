@@ -12,6 +12,8 @@ namespace MyCompanyName.AbpZeroTemplate.OrderService {
     public interface IOrderAppService : IApplicationService {
         PagedResultOutput<DayDueDto> GetDaydueList(GetOrderInput input);
         FileDto ExportOrderInfo(GetOrderInput input);
+         PagedResultOutput<OrderRecords> GetCheckLists(GetPointOrdersInput input);
+         FileDto ExportCheckLists(GetPointOrdersInput input);
 
         PagedResultOutput<CustomOrderDto> GetCustomOrderList(GetOrderInput input);
 
