@@ -149,8 +149,8 @@
                     <td><span>{{x.dish }}</span></td>
                    
                     <td ng-bind="x.dishNumber"></td>
-                    <td ng-bind="x.creationTime | date:'yyyy-MM-dd'"></td>
-                    <td ng-bind="x.orderTime| date:'yyyy-MM-dd'"></td>
+                    <td ng-bind="x.creationTime | date:'yyyy-MM-dd HH:mm'"></td>
+                    <td ng-bind="x.orderTime| date:'yyyy-MM-dd HH:mm'"></td>
                    
                     <td><span>{{x.orderAmount |rmb }}</span></td>
                     <td><span>{{x.amountPayable |rmb }}</span></td>

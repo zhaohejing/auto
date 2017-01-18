@@ -166,11 +166,15 @@
             outer.setAttribute("time", day.format('YYYY-MM-DD'))
             outer.onclick = this.clicks;
         }
-
-       else if (day.format('YYYY-MM') == moment().format('YYYY-MM')&&(day.format('DD')- moment().format('DD') > 1)) {
+        else if (day.format('YYYY-MM') > moment().format('YYYY-MM')) {
             outer.setAttribute("time", day.format('YYYY-MM-DD'))
             outer.onclick = this.clicks;
-        } else if (day.format('DD') - moment().format('DD')==1 && moment().format('HH') <= 15) {
+        }
+
+        else if (day.format('YYYY-MM') == moment().format('YYYY-MM') && (day.format('DD') - moment().format('DD') > 1)) {
+            outer.setAttribute("time", day.format('YYYY-MM-DD'))
+            outer.onclick = this.clicks;
+        } else if (day.format('DD') - moment().format('DD') == 1 && moment().format('HH') <= 15) {
             outer.setAttribute("time", day.format('YYYY-MM-DD'))
             outer.onclick = this.clicks;
         }

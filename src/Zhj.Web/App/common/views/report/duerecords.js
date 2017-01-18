@@ -110,7 +110,12 @@
                 });
             }
             vm.export = function () {
-                var parms = { name: vm.name, card: vm.card};
+                var parms = {
+                    name: vm.name,
+                    card: vm.card,
+                    searchStartTime: vm.startTime,
+                    searchEndTime: vm.endTime
+                };
                 orderService.exportprePaidList(parms)
                    .success(function (result) {
                        app.downloadTempFile(result);

@@ -89,7 +89,8 @@ max(case State when 2 then RechargeCost else 0 end ) WithDrawal, max(creationTim
                 parm += $@" and a.OrderTime >='{t}' ";
             }
             if (end.HasValue) {
-                var t = Clock.Normalize((DateTime)end);
+                var c = Clock.Normalize((DateTime)end);
+                var t = Convert.ToDateTime(c.ToString("yyyy-MM-dd") + " 23:59:59");
 
                 parm += $@" and a.OrderTime <='{t}' ";
             }
@@ -165,7 +166,8 @@ a.PointId,a.PointName,b.Balance from customers a left join (select * from iccard
                 parm += $@" and a.OrderTime >='{t}' ";
             }
             if (end.HasValue) {
-                var t = Clock.Normalize((DateTime)end);
+                var c = Clock.Normalize((DateTime)end);
+                var t = Convert.ToDateTime(c.ToString("yyyy-MM-dd") + " 23:59:59");
 
                 parm += $@" and a.OrderTime <='{t}' ";
             }
@@ -192,7 +194,8 @@ group by a.Dish, a.OrderTime,a.DishCost;";
                 parm += $@" and a.OrderTime >='{t}' ";
             }
             if (end.HasValue) {
-                var t = Clock.Normalize((DateTime)end);
+                var c = Clock.Normalize((DateTime)end);
+              var   t = Convert.ToDateTime(c.ToString("yyyy-MM-dd") + " 23:59:59");
 
                 parm += $@" and a.OrderTime <='{t}' ";
             }
@@ -218,7 +221,8 @@ on b.CardId=c.Id inner join orderpaylists d on a.Id=d.OrderId left join abpusers
                 parm += $@" and a.OrderTime >='{t}' ";
             }
             if (end.HasValue) {
-                var t = Clock.Normalize((DateTime)end);
+                var c = Clock.Normalize((DateTime)end);
+                var t = Convert.ToDateTime(c.ToString("yyyy-MM-dd") + " 23:59:59");
                 parm += $@" and a.OrderTime <='{t}' ";
             }
 
@@ -272,7 +276,8 @@ on b.CardId=c.Id inner join orderpaylists d on a.Id=d.OrderId left join abpusers
                 parms += $@" and a.OrderTime >='{t}' ";
             }
             if (end.HasValue) {
-                var t = Clock.Normalize((DateTime)end);
+                var c = Clock.Normalize((DateTime)end);
+                var t = Convert.ToDateTime(c.ToString("yyyy-MM-dd") + " 23:59:59");
                 parms += $@" and a.OrderTime <='{t}' ";
             }
 
@@ -295,7 +300,8 @@ on a.CustomerId =b.Id where a.IsDeleted=0 and b.Isdeleted=0 and a.State in (2,3)
                 parms += $@" and a.OrderTime >='{t}' ";
             }
             if (end.HasValue) {
-                var t = Clock.Normalize((DateTime)end);
+                var c = Clock.Normalize((DateTime)end);
+                var t = Convert.ToDateTime(c.ToString("yyyy-MM-dd") + " 23:59:59");
                 parms += $@" and a.OrderTime <='{t}' ";
             }
 

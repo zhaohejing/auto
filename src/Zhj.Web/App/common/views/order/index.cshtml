@@ -129,7 +129,7 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-if="vm.nopaylist.length>0" ng-repeat="r in vm.nopaylist">
-                                            <td>{{r.orderTime | date : 'yyyy-MM-dd'}}</td>
+                                            <td>{{r.orderTime | date : 'yyyy-MM-dd HH:mm'}}</td>
                                             <td>{{r.dish}}</td>
                                             <td>{{r.dishNumber}}</td>
                                             <td>{{r.dishCost | rmb }}</td>

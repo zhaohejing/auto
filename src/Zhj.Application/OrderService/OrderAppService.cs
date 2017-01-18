@@ -63,8 +63,9 @@ namespace MyCompanyName.AbpZeroTemplate.OrderService {
                 start = Clock.Normalize((DateTime)input.SearchStartTime);
             }
             if (input.SearchEndTime.HasValue) {
-                end = Clock.Normalize((DateTime)input.SearchEndTime);
-
+             
+                var t = Clock.Normalize((DateTime)input.SearchEndTime);
+                end = Convert.ToDateTime( t.ToString("yyyy-MM-dd") + " 23:59:59");
             }
             var a = res.WhereIf(!input.Name.IsNullOrWhiteSpace(), c => c.CustomerName.Contains(input.Name))
                 .WhereIf(!input.Card.IsNullOrWhiteSpace(), c => c.OutCard.Contains(input.Card))
@@ -84,7 +85,8 @@ namespace MyCompanyName.AbpZeroTemplate.OrderService {
                 start = Clock.Normalize((DateTime)input.SearchStartTime);
             }
             if (input.SearchEndTime.HasValue) {
-                end = Clock.Normalize((DateTime)input.SearchEndTime);
+                var t = Clock.Normalize((DateTime)input.SearchEndTime);
+                end = Convert.ToDateTime(t.ToString("yyyy-MM-dd") + " 23:59:59");
 
             }
 
@@ -159,7 +161,7 @@ namespace MyCompanyName.AbpZeroTemplate.OrderService {
         }
         public FileDto ExportPointOrder(GetPointOrderInput input) {
             var list = _sqlExecuter.GetPointOrderList<PointOrderDto>(input.SearchStartTime, input.SearchEndTime, "").ToList()
-              .WhereIf(!string.IsNullOrWhiteSpace(input.PointName), c => c.PointName.Contains(input.PointName))
+              .WhereIf(!string.IsNullOrWhiteSpace(input.PointName), c => c.PointName.Equals(input.PointName))
               .WhereIf(!string.IsNullOrWhiteSpace(input.DishName), c => c.Dish.Contains(input.DishName));
             if (list == null || list.Count() <= 0) {
                 return null;
