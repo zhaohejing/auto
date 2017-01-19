@@ -44,7 +44,7 @@ namespace MyCompanyName.AbpZeroTemplate.IcCardService {
                 throw new UserFriendlyException(L("ThereIsNoAny"));
             }
             if (input.Type == RecordState.TopUp) {//充值
-                model.Balance += input.Nums;
+              
                 var guid = Guid.NewGuid( ).ToString("N");
                 await _rechargerRepository.InsertAsync(new RechargerRecord( ) {
                     CardId = model.Id,
@@ -52,12 +52,14 @@ namespace MyCompanyName.AbpZeroTemplate.IcCardService {
                     RechargeNumber = guid,
                     State = RecordState.TopUp
                 });
+                model.Balance += input.Nums;
+              await  CurrentUnitOfWork.SaveChangesAsync();
             }
             else if (input.Type == RecordState.WithDrawal) {
                 if (model.Balance < input.Nums) {
                     throw new UserFriendlyException(L("ThereHadNoMuchMoney"));
                 }
-                model.Balance -= input.Nums;
+               
                 var guid = Guid.NewGuid( ).ToString("N");
                 await _rechargerRepository.InsertAsync(new RechargerRecord( ) {
                     CardId = model.Id,
@@ -65,6 +67,8 @@ namespace MyCompanyName.AbpZeroTemplate.IcCardService {
                     RechargeNumber = guid,
                     State = RecordState.WithDrawal
                 });
+                model.Balance -= input.Nums;
+                await CurrentUnitOfWork.SaveChangesAsync();
             }
             else if (input.Type == RecordState.OffCard) {
                 if (model.Balance > 0) {
@@ -78,6 +82,7 @@ namespace MyCompanyName.AbpZeroTemplate.IcCardService {
                     RechargeNumber = guid,
                     State = RecordState.OffCard
                 });
+                await CurrentUnitOfWork.SaveChangesAsync();
             }
         }
         /// <summary>
@@ -235,15 +240,7 @@ namespace MyCompanyName.AbpZeroTemplate.IcCardService {
             var res = HttpConnectToServer(url, $"pointid={input.pointId}&date={input.date}");
             var temp = JsonConvert.DeserializeObject<dynamic>(res);
             return temp;
-            //var t = new List<dynamic>() {
-
-            //new { product_id=1, product_name="aaaaa", price=100.3m },
-            //new { product_id=2, product_name="bbbbb", price=101.3m },
-            //new { product_id=3, product_name="ccccc", price=120.3m },
-            //new { product_id=4, product_name="ddddd", price=130.3m },
-            //new { product_id=5, product_name="eeeee", price=10.3m },
-            //};
-            //return new { result=t };
+      
         }
         /// <summary>
         /// 发送消息到ws服务器
@@ -251,7 +248,7 @@ namespace MyCompanyName.AbpZeroTemplate.IcCardService {
         /// <param name="ServerPage"></param>
         /// <param name="strXml"></param>
         /// <returns></returns>
-        public string HttpConnectToServer(string ServerPage, string strXml) {
+        private string HttpConnectToServer(string ServerPage, string strXml) {
             string postData = strXml;
 
             byte[] dataArray = Encoding.Default.GetBytes(postData);
@@ -340,11 +337,12 @@ namespace MyCompanyName.AbpZeroTemplate.IcCardService {
                             Cost = order.DishCost,
                             PayState = input.PayState
                         });
+                        card.Balance -= order.DishCost;
                         var or = await _orderRepository.FirstOrDefaultAsync(order.Id);
                         or.State = OrderState.PayforSuccess;
                     }
 
-                    card.Balance -= input.TotalPrice;
+                   // card.Balance -= input.TotalPrice;
 
                 }
 
