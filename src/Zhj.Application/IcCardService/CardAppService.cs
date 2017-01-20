@@ -116,14 +116,19 @@ namespace MyCompanyName.AbpZeroTemplate.IcCardService {
             if ( card == null || cus == null) {
                 throw new UserFriendlyException(L("ThereIsNoAny"));
             }
+            order = _orderRepository.FirstOrDefault(input.Id);
+            if (order.State!=OrderState.UserCancelled) {
+                await _orderPayRepository.InsertAsync(new OrderPayList() {
+                    Cost = order.AmountPayable,
+                    OrderId = order.Id,
+                    PayState = PayState.BackMoney
+                });
+                order.State = OrderState.UserCancelled;
 
-            card.Balance += order.AmountPayable;
-            order.State = OrderState.UserCancelled;
-            await _orderPayRepository.InsertAsync(new OrderPayList( ) {
-                Cost = order.AmountPayable,
-                OrderId = order.Id,
-                PayState = PayState.BackMoney
-            });
+                card.Balance += order.AmountPayable;
+                await CurrentUnitOfWork.SaveChangesAsync();
+            }
+          
         }
         [AbpAuthorize(AppPermissions.Pages_TradingInfo_BeBackOff)]
         public async Task BeBackOffOrder(IdInput<int> input) {
@@ -136,14 +141,19 @@ namespace MyCompanyName.AbpZeroTemplate.IcCardService {
             if (order == null || card == null || cus == null) {
                 throw new UserFriendlyException(L("ThereIsNoAny"));
             }
+            order = _orderRepository.FirstOrDefault(input.Id);
+            if (order.State!=OrderState.UserCancelled) {
+                await _orderPayRepository.InsertAsync(new OrderPayList() {
+                    Cost = order.AmountPayable,
+                    OrderId = order.Id,
+                    PayState = PayState.BackMoney
+                });
+                order.State = OrderState.UserCancelled;
 
-            card.Balance += order.AmountPayable;
-            order.State = OrderState.UserCancelled;
-            await _orderPayRepository.InsertAsync(new OrderPayList( ) {
-                Cost = order.AmountPayable,
-                OrderId = order.Id,
-                PayState = PayState.BackMoney
-            });
+                card.Balance += order.AmountPayable;
+                await CurrentUnitOfWork.SaveChangesAsync();
+            }
+          
         }
 
         public async Task<dynamic> UpdateMeal(string orderid) {

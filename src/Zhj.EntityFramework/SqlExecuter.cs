@@ -233,7 +233,7 @@ on b.CardId=c.Id inner join orderpaylists d on a.Id=d.OrderId left join abpusers
             var sql = $@"select a.PointName,a.Dish,sum(a.DishNumber) as DishNumber,a.OrderTime
 from orders a inner join customers b on a.CustomerId =b.Id inner join iccards c
 on b.CardId=c.Id inner join orderpaylists d on a.Id=d.OrderId left join abpusers e on a.CreatorUserId=e.Id
-  where  a.State in (2) and b.IsDeleted=0 and c.IsDeleted=0  {parm}
+  where  a.State in (2) and a.isDeleted=0 and  b.IsDeleted=0 and c.IsDeleted=0  {parm}
   group by  a.PointName,a.Dish, a.OrderTime;";
             var dt = MySqlHelper.ExecuteDataTable(CommandType.Text, sql);
             return ConvertToModel<T>(dt);
